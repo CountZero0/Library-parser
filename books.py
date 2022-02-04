@@ -29,8 +29,11 @@ def main():
         title = book_title.text.strip().split('::')[0].strip()
         image_url_path = soup.find('div', class_='bookimage').find('img').get('src')
         image_url = urljoin(book_url, image_url_path)
-        download_books(book_id, response, title)
-        download_book_covers(image_url)
+        comments = soup.find_all('div', class_='texts')
+        for comment in comments:
+            print(comment.find('span', class_='black').text)
+        #download_books(book_id, response, title)
+        #download_book_covers(image_url)
 
 
 def download_book_covers(url, folder='images/'):
@@ -41,6 +44,7 @@ def download_book_covers(url, folder='images/'):
 
     with open(file_path, "wb") as file:
         file.write(response.content)
+
 
 
 def check_for_redirect(response):
