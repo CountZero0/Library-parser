@@ -30,8 +30,11 @@ def main():
         image_url_path = soup.find('div', class_='bookimage').find('img').get('src')
         image_url = urljoin(book_url, image_url_path)
         comments = soup.find_all('div', class_='texts')
-        for comment in comments:
-            print(comment.find('span', class_='black').text)
+        genre_tag = soup.find('span', class_='d_book').find_all('a')
+        book_genre = [genre.text for genre in genre_tag]
+        print(title)
+        print(book_genre)
+        print()
         #download_books(book_id, response, title)
         #download_book_covers(image_url)
 
