@@ -1,3 +1,4 @@
+import argparse
 import os
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
@@ -8,12 +9,21 @@ from pathvalidate import sanitize_filename
 from tqdm import tqdm as t
 
 
+def create_parser():
+    parser = argparse.ArgumentParser(description='Programm parse online library tululu.prg')
+    parser.add_argument('start_id', help='Page id with which you start parsing', type=int)
+    parser.add_argument('end_id', help='Page id with which you end parsing', type=int)
+    return parser.parse_args()
+
+
 def main():
     Path("books").mkdir(exist_ok=True)
     Path("images").mkdir(exist_ok=True)
     Path("comments").mkdir(exist_ok=True)
 
-    for book_id in t(range(1, 10), desc='Parsing online library', colour='MAGENTA', ncols=100):
+    args = create_parser()
+
+    for book_id in t(range(args.start_id, args.end_id + 1), desc='Parsing online library', colour='MAGENTA', ncols=120):
         book_url = f"https://tululu.org/txt.php?id={book_id}"
         parse_url = f"https://tululu.org/b{book_id}/"
         response = requests.get(book_url)
@@ -74,7 +84,6 @@ def download_book_covers(url, folder='images/'):
 
     with open(file_path, "wb") as file:
         file.write(response.content)
-
 
 
 def check_for_redirect(response):
