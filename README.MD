@@ -12,7 +12,7 @@ Python3 should be installed. to install all dependencies use this command in ter
 
 Use this command:
 
-```python books.py {start_id} {end_id}```
+```python books.py start_id end_id```
 
-* 'start_id'- page id with which you start downloading
-* 'end_id' - page id with which you end downloading
+* start_id - page id with which you start downloading
+* end_id - page id with which you end downloading
